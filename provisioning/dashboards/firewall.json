@@ -76,7 +76,7 @@
   "gnetId": 5420,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1573150312454,
+  "iteration": 1573150312463,
   "links": [],
   "panels": [
     {
@@ -443,12 +443,12 @@
               "type": "raw_document"
             }
           ],
-          "query": "iface:$iface  AND dest_port:$dport",
+          "query": "iface:$iface  AND dest_port:$dport action:$action",
           "refId": "A",
           "timeField": "timestamp"
         }
       ],
-      "title": "Real time logs by iface:$iface",
+      "title": "Real time logs by iface:$iface ",
       "transform": "json",
       "type": "table"
     },
@@ -1369,5 +1369,5 @@
   "timezone": "browser",
   "title": "Firewall Logs",
   "uid": "000000030",
-  "version": 83
+  "version": 86
 }

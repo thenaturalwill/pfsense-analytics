@@ -82,7 +82,7 @@ your Graylog Instance on http://localhost:9000. Let's see if we can login with u
 
 # 2. Initial Index creation
 
-We now have to create the Indices in Elasticsearch for the pfSense logs in System / Indices
+Next we have to create the Indices in Elasticsearch for the pfSense logs in System / Indices
 
 ![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Indice-Pfsense-606x1024.png)
 
