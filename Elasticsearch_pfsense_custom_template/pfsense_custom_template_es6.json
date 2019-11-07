@@ -219,10 +219,6 @@
           "type": "date",
           "format": "yyyy-MM-dd HH:mm:ss.SSS"
         },
-        "real_timestamp": {
-          "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
-        },
         "tos": {
           "type": "keyword"
         },
