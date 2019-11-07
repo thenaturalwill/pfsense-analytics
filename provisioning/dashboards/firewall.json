@@ -76,7 +76,7 @@
   "gnetId": 5420,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1573140215631,
+  "iteration": 1573150312454,
   "links": [],
   "panels": [
     {
@@ -153,7 +153,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND src_ip:$src_ip",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -256,7 +256,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND src_ip:$src_ip",
           "refId": "A",
           "target": "",
           "timeField": "timestamp"
@@ -268,10 +268,6 @@
     },
     {
       "columns": [
-        {
-          "text": "real_timestamp",
-          "value": "real_timestamp"
-        },
         {
           "text": "src_ip",
           "value": "src_ip"
@@ -307,6 +303,10 @@
         {
           "text": "src_ip_whoisresult",
           "value": "src_ip_whoisresult"
+        },
+        {
+          "text": "timestamp",
+          "value": "timestamp"
         }
       ],
       "datasource": "pfsensefw",
@@ -325,13 +325,13 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 0,
-        "desc": true
+        "col": null,
+        "desc": false
       },
       "styles": [
         {
-          "dateFormat": "DD/MM/YY h:mm:ss a",
-          "pattern": "real_timestamp",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "timestamp",
           "type": "date"
         },
         {
@@ -443,7 +443,7 @@
               "type": "raw_document"
             }
           ],
-          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface  AND dest_port:$dport",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -533,7 +533,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "target": "",
           "timeField": "timestamp"
@@ -617,7 +617,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -690,7 +690,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -925,7 +925,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -998,7 +998,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "target": "",
           "timeField": "timestamp"
@@ -1113,7 +1113,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1226,7 +1226,7 @@
               "type": "count"
             }
           ],
-          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip -src_ip:62.155.248.*",
+          "query": "iface:$iface  AND dest_port:$dport AND src_ip:$src_ip",
           "refId": "A",
           "target": "",
           "timeField": "timestamp"
@@ -1369,5 +1369,5 @@
   "timezone": "browser",
   "title": "Firewall Logs",
   "uid": "000000030",
-  "version": 82
+  "version": 83
 }
