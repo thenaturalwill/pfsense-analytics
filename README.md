@@ -9,9 +9,17 @@ The whole Metric approach is split into several subtopics.
 
 Optional Succicata/SNORT logs can be pushed to Elasticsearch, Graylog has ready made extractors for this, but currently this is not included in this Documentation.
 
+This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but should work flawless with any debian'ish linux distro.
+
 # System requirements
 
 Install docker, docker-compose and git.
+
+```
+ubuntu@pfanalytics:~$ sudo apt install docker.io docker-compose git
+...
+
+```
 
 # Prepare Docker
 
@@ -25,7 +33,7 @@ cd pfsense-graylog
 We have to adjust some Systemlimits to allow Elasticsearch to run:
 
 ```
-sysctl -w vm.max_map_count=262144
+sudo sysctl -w vm.max_map_count=262144
 ```
 
 to make it permanent edit /etc/sysctl.conf and add the line:
@@ -77,7 +85,9 @@ and with [cerebro](https://github.com/lmenezes/cerebro) we can check it. You can
 
 This content pack includes Input rsyslog type , extractors, lookup tables, Data adapters for lockup tables and Cache for lookup tables.
 
-We have to import the file from the Content Pack folder and for them we select in the System / Content Packs the option Import content packs to upload the file.
+We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
+
+https://github.com/lephisto/pfsense-graylog/raw/master/pfsense_content_pack/graylog3/3-pfsense-analysis.json
 
 ![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Content_packs_-_2018-04-04_20.45.13-1.png)
 
@@ -102,7 +112,13 @@ We edit the stream of pfsense in Streams to associate the index that we created 
 
 # Cerebro
 
+This part might be a little bit confusing, so read carefully!
+
 As previously explained, by default graylog for each index that is created generates its own template and applies it every time the index rotates. If we want our own templates we must create them in the same elasticsearch. We will add the field real_timestamp that will be useful when using grafana and we also convert the geo type dest_ip_geolocation and src_ip_geolocation to type geo_point to be used in the World Map panels since graylog does not use this format.
+
+Get the Index Template from the GIT repo you cloned or sideload it from:
+
+https://raw.githubusercontent.com/lephisto/pfsense-graylog/master/Elasticsearch_pfsense_custom_template/pfsense_custom_template_es6.json
 
 To import personalized template open cerebro and will go to more/index template
 
@@ -120,15 +136,15 @@ And then we press the create button.
 
 _!!! IMPORTANT: Now we will stop the graylog service to proceed to eliminate the index through Cerebro._
 
-`#docker-compose stop graylog`
+`sudo docker-compose stop graylog`
 
 In Cerebro we stand on top of the index and unfold the options and select delete index.
 
 ![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Delete-index-pfsense.png)
 
-We start the graylog service again and this will create the index with this template.
+We start the graylog service again and this will recreate the index with this template.
 
-`#docker-compose stop graylog`
+`sudo docker-compose start graylog`
 
 Pipelines
 
