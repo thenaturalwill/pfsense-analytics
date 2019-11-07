@@ -12,7 +12,6 @@ services:
     restart: always
     volumes:
       - es_data:/usr/share/elasticsearch/data
-        #      - ./jvm.options:/usr/share/elasticsearch/config/jvm.options
     environment:
       - http.host=0.0.0.0
       - transport.host=0.0.0.0
@@ -31,13 +30,13 @@ services:
     volumes:
       - graylog_journal:/usr/share/graylog/data/journal
       - ./service-names-port-numbers.csv:/etc/graylog/server/service-names-port-numbers.csv
-      - ./GeoLite2-City_20191022/GeoLite2-City.mmdb:/etc/graylog/server/GeoLite2-City.mmdb
+      - ./GeoLite2-City.mmdb:/etc/graylog/server/GeoLite2-City.mmdb
     environment:
       # CHANGE ME (must be at least 16 characters)!
       - GRAYLOG_PASSWORD_SECRET=somepasswordpepperzzz
       # Password: admin
       - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://turing.home:9000/
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
       - GRAYLOG_TIMEZONE=Europe/Berlin
     links:
       - mongodb:mongo
@@ -60,7 +59,7 @@ services:
       - 12201:12201
       # GELF UDP
       - 12201:12201/udp
-
+  # Kibana : https://www.elastic.co/guide/en/kibana/6.8/index.html
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:6.8.4
     #    volumes:
@@ -70,9 +69,38 @@ services:
     depends_on:
       - elasticsearch
     ports:
-      - 5601:5601 
+      - 5601:5601
+  cerebro:
+    image: lmenezes/cerebro
+    ports:
+      - 9001:9000
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
 
-        
+  influxdb:
+    image: "influxdb:latest"
+    environment:
+      - INFLUXDB_DB="ndpi"
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb:/var/lib/influxdb
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./provisioning/:/etc/grafana/provisioning
+    links:
+      - elasticsearch
+      - influxdb
+    depends_on:
+      - elasticsearch
+      - influxdb
+
 # Volumes for persisting data, see https://docs.docker.com/engine/admin/volumes/volumes/
 volumes:
   mongo_data:
@@ -81,4 +109,7 @@ volumes:
     driver: local
   graylog_journal:
     driver: local
-
+  grafana:
+    driver: local
+  influxdb:
+    driver: local
