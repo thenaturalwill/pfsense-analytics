@@ -1,6 +1,6 @@
-This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting done by devopstales and opc40772. I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose. There are still a number of manual steps required.
+This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose, still there is a number of manual steps required.
 
-The whole Metric approach is split into several subtopics.
+The whole metric approach is split into several subtopics.
 
 | Metric type           | Stored via                | stored in       | Visualisation  |
 | -------------         |:---------------------:    | --------------: | --------------: |
@@ -27,15 +27,17 @@ Moar Insights:
 
 This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but should work flawless with any debian'ish linux distro.
 
-# System requirements
+# 0. System requirements
 
-Install docker, docker-compose and git.
+Since this involves Elasticsearch a few GB of RAM will be required. I'm not sure if an old Raspi will do. Give me feedback :)
+
+Please install docker, docker-compose and git as basic prerequisite.
 
 ```
 sudo apt install docker.io docker-compose git
 ```
 
-# 1. Prepare Docker
+# 1. Prepare compose environment
 
 Let's pull this repo to the Server where you intend to run the Analytics front- and backend.
 
@@ -56,16 +58,16 @@ to make it permanent edit /etc/sysctl.conf and add the line:
 vm.max_map_count=262144
 ```
 
-Next we edit the docker-compose.yml file and set some values:
+Next edit the docker-compose.yml file and set some values:
 
-The URL you want your Graylog to be available under:
+The URL you want your graylog to be available under:
 - GRAYLOG_HTTP_EXTERNAL_URI (eg: http://localhost:9000)
 
-A Salt for encrypting your Gralog passwords
+A salt for encrypting your graylog passwords
 - GRAYLOG_PASSWORD_SECRET (Change that _now_)
 
 
-Now We need to pull the GeoIP Database from maxmind:
+Now let's pull the GeoIP Database from maxmind:
 
 ```
 curl --output mm.tar.gz https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
@@ -90,15 +92,15 @@ This should expose you the following services externally:
 | Service       | URL                   | Default Login  | Purpose |
 | ------------- |:---------------------:| --------------:| --------------:|
 | Graylog       | http://localhost:9000 | admin/admin |  Configure Data Ingestions and Extractors for Log Inforation |
-| Grafana       | http://localhost:3000 | admin/admin | Draw nice Graphs
-| Cerebro       | http://localhost:9001 |    none - provide with ES API: http://elasticsearch:9200 | ES Admin tool. Only required for setting up the Index.
+| Grafana       | http://localhost:3000 | admin/admin | Draw nice Graphs |
+| Cerebro       | http://localhost:9001 |    none - provide with ES API: http://elasticsearch:9200 | ES Admin tool. Only required for setting up the Index.|
 
-Depending on your Hardware after a few minutes you should be able to connect to
+Depending on your hardware a few minutes later you should be able to connect to
 your Graylog Instance on http://localhost:9000. Let's see if we can login with username "admin", password "admin".
 
 # 2. Initial Index creation
 
-Next we have to create the Indices in Elasticsearch for the pfSense logs in System / Indices
+Next we have to create the Index in Elasticsearch for the pfSense logs in System / Indices
 
 ![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Indice-Pfsense-606x1024.png)
 
@@ -111,21 +113,25 @@ Index shard 4 and Index replicas 0, the rotation of the Index time index and the
 In Graylog go to System->Configurations and:
 
 1. Change the order by Message processors, to have "GeoIP Resolver" on the bottom
-2. Update Plugins an denable Geo-Location Processor
+2. In the Plugins section update enable the Geo-Location Processor
 
 
 # 4. Content Packs
 
 ### Custom Content Pack
 
-This content pack includes Input rsyslog type , extractors, lookup tables, Data adapters for lockup tables and Cache for lookup tables.
+This content pack includes Input rsyslog type , extractors, lookup tables, Data adapters for lockup tables and Cache for lookup tables. You could do this manually, but this is preconfigured for what we want, so you don't have to fight with lookups, data adapters etc.
 
 We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
 
 https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/pfsense_content_pack/graylog3/pfanalytics.json
 
+Once it's uploaded, press the Install button. If everthing went well it should look like:
 
-Once it's uploaded, press Install.
+![dpi1](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/contentpack.png)
+
+Note the "pfintel" on the bottom of the list.
+
 
 # 4. Assign Streams
 
@@ -169,6 +175,7 @@ We start the graylog service again and this will recreate the index with this te
 
 `sudo docker-compose start graylog`
 
+Once this procedure is done, we don't need Cerebro for daily work, so it could be disable in docker-compose.yml.
 
 # 6. Configure pfSense
 
@@ -188,7 +195,7 @@ We now go to graylog by selecting the pfsense stream and we will see how it is p
 
 # Check Grafana
 
-Dashboards and Datasource are auto-provisioned to Grafana. Log in at http://localhost:9000 with admin/admin and you should see your Firewall Logs pouring in.
+Dashboards and Datasource are auto-provisioned to Grafana. Log in at http://localhost:3000 with admin/admin and you should see your Firewall Logs pouring in.
 
 # DPI
 
