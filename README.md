@@ -7,7 +7,23 @@ The whole Metric approach is split into several subtopics.
 | pfSense IP Filter Log | Graylog                   | Elasticsearch   | Grafana |
 | NTOP DPI Data         | NTOP timeseries export    | InfluxDB        | Grafana |
 
-Optional Succicata/SNORT logs can be pushed to Elasticsearch, Graylog has ready made extractors for this, but currently this is not included in this Documentation.
+Optional Succicata/SNORT logs can be pushed to Elasticsearch, Graylog has ready made extractors for this, but currently this is not yet included in this Documentation.
+
+What you get is Eyecandy like this:
+
+DPI Data:
+![dpi2](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/dpi2.png)
+
+More DPI Data:
+![dpi1](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/dpi1.png)
+
+Firewall Insights:
+![fw1](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/fw1.png)
+
+Moar Insights:
+![fw2](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/fw2.png)
+
+
 
 This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but should work flawless with any debian'ish linux distro.
 
