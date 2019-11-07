@@ -90,17 +90,11 @@ Index shard 4 and Index replicas 0, the rotation of the Index time index and the
 
 ![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Indices_and_Index_Sets_-_2018-04-04_20.30.42-1024x82.png)
 
-and with [cerebro](https://github.com/lmenezes/cerebro) we can check it. You can access Cerebro under http://localhost:9001 and enter "http://elasticsearch:9200" as URL.
-
-![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/cerebrograylogpfsense_-_2018-03-05_19.27.59-1024x454.png)
-
-
-
-`
+# 3. GeoIP Plugin activation
 
 In Graylog go to System->Configurations and:
 
-1. Change the order by Message processors, to have "GeoIP Resolver on the bottom"
+1. Change the order by Message processors, to have "GeoIP Resolver" on the bottom
 2. Update Plugins an denable Geo-Location Processor
 
 
@@ -114,28 +108,16 @@ We can take it from the Git directory or sideload it from github to the Workstat
 
 https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/pfsense_content_pack/graylog3/pfanalytics.json
 
-![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Content_packs_-_2018-04-04_20.45.13-1.png)
 
-
-As we see, it is add to the list
-
-![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Content_packs_-_2018-04-04_20.46.03.png)
-
-Now we select the Pfsense content pack
-
-![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Selecting-Pfsense-Content-Pack.png)
-
-And we apply it
-
-![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/03/Graylog_-_Content_packs_-_2018-03-09_08.47.49.png)
+Once it's uploaded, press Install.
 
 # 4. Assign Streams
 
-We edit the stream of pfsense in Streams to associate the index that we created initially. We mark that it eliminates the coincidences for the default stream 'All message' so that only it stores it in the index of pfsense.
+Now edit then Streams: Assign your Index pfsense in Streams to associate the index that we created initially. We mark that it eliminates the coincidences for the default stream 'All message' so that only it stores it in the index of pfsense.
 
 ![Content Pack](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Streams_-_2018-04-04_20.52.28.png)
 
-# Cerebro
+# 5. Cerebro
 
 This part might be a little bit confusing, so read carefully!
 
@@ -182,12 +164,48 @@ We go to the Remote Logging Options section and in Remote log servers we specify
 
 We save the configuration.
 
-# Graylog
+# Check Graylog
 
 We now go to graylog by selecting the pfsense stream and we will see how it is parsing the log messages creating the fields.
 
 ![Graylog](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Stream_pfsense_logs_-_Search_-_2018-04-04_22.22.20-1024x452.png)
 
-# Grafana
+# Check Grafana
 
 Dashboards and Datasource are auto-provisioned to Grafana. Log in at http://localhost:9000 with admin/admin and you should see your Firewall Logs pouring in.
+
+# DPI
+
+Now that we have the Firewall logs we want to get some Intel about legit Traffic on our Network.
+
+- On your pfSense go to System->Package Manager->Available Packages and install ntopng.
+- Head to Diagnostics -> ntopng Settings and do basic Configuration
+- Update GeoIP Data there as well. (Install "PFSENSE-9211: Fix GeoIP DB" if it fails)
+- Go to Diagnostics -> ntopng Settings and log in to ntopng
+- Go to Settings -> Preferences -> timeseries
+
+Configure according your needs, I propose following Settings:
+
+| Setting           | Value                 | remarks |
+| -------------     |:---------------------:|:---------------------:|
+| Timeseries Driver | InfluxDB ||
+| InfluxDB URL      | http://yourdockerserverip:8086   | |
+| InfluxDB Datebase   | ndpi   ||
+| InfluxDB Authentication   | off  | unless you have enabled.|
+| InfluxDB Storage   | 365d   |   |
+| Interface TS: Traffic   | on   |   |
+| Interface TS: L7 Applications   | per Protocol   |   |
+| Local Host Timeseries: Traffic  | on   |   |
+| Local Host Timeseries: L7 Applications   | per Protocol   |   |
+| Device Timeseries: Traffic  | on   |   |
+| Device Timeseries: L7 Applications   | per Category   |   |
+| Device Timeseries: Retention | 30d  |   |
+| Other Timeseries: TCP Flags  | off  |   |
+| Other Timeseries: TCP OfO,Lost,Retran  | off  |   |
+| Other Timeseries: VLANs  | on  |   |
+| Other Timeseries: Autonomous Systems | on  |   |
+| Other Timeseries: Countries | on  |   |
+| Datebase Top Talker Storage   | 365d  |   |
+
+
+That should do it. Check your DPI Dashboard and enjoy :)
