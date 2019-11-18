@@ -219,6 +219,10 @@
           "type": "date",
           "format": "yyyy-MM-dd HH:mm:ss.SSS"
         },
+        "utc_timestamp": {
+          "format": "yyyy-MM-dd HH:mm:ss",
+          "type": "date"
+        },
         "tos": {
           "type": "keyword"
         },
