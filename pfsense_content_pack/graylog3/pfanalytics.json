@@ -1,7 +1,7 @@
 {
-  "v": 1,
+  "v": "1",
   "id": "a114b211-26a9-471c-a334-91fef22788d3",
-  "rev": 1,
+  "rev": 2,
   "name": "pfintel",
   "summary": "pfSense Intelligence",
   "description": "",
@@ -19,58 +19,6 @@
       "data": {
         "name": "IPV4",
         "pattern": "(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "lookup_table",
-        "version": "1"
-      },
-      "id": "f60339c5-6708-48e5-82db-39f8902603b8",
-      "data": {
-        "default_single_value_type": {
-          "@type": "string",
-          "@value": "NULL"
-        },
-        "cache_name": {
-          "@type": "string",
-          "@value": "9743297d-c7d8-488c-b766-61e2df6e9510"
-        },
-        "name": {
-          "@type": "string",
-          "@value": "whois"
-        },
-        "default_multi_value_type": {
-          "@type": "string",
-          "@value": "NULL"
-        },
-        "default_multi_value": {
-          "@type": "string",
-          "@value": ""
-        },
-        "data_adapter_name": {
-          "@type": "string",
-          "@value": "9e30fb29-2b60-4523-a06c-28c9efb2e558"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Whois"
-        },
-        "default_single_value": {
-          "@type": "string",
-          "@value": ""
-        },
-        "description": {
-          "@type": "string",
-          "@value": "This is the lookup table for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This lookup table is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
-        }
       },
       "constraints": [
         {
@@ -550,319 +498,6 @@
     {
       "v": "1",
       "type": {
-        "name": "input",
-        "version": "1"
-      },
-      "id": "c5a31750-6e4a-4a9f-852b-ba099eae85c6",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "pfsense"
-        },
-        "configuration": {
-          "expand_structured_data": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "recv_buffer_size": {
-            "@type": "integer",
-            "@value": 262144
-          },
-          "port": {
-            "@type": "integer",
-            "@value": 5442
-          },
-          "number_worker_threads": {
-            "@type": "integer",
-            "@value": 1
-          },
-          "force_rdns": {
-            "@type": "boolean",
-            "@value": false
-          },
-          "allow_override_date": {
-            "@type": "boolean",
-            "@value": true
-          },
-          "bind_address": {
-            "@type": "string",
-            "@value": "0.0.0.0"
-          },
-          "store_full_message": {
-            "@type": "boolean",
-            "@value": false
-          }
-        },
-        "static_fields": {
-          "pfsense": {
-            "@type": "string",
-            "@value": "true"
-          }
-        },
-        "type": {
-          "@type": "string",
-          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
-        },
-        "global": {
-          "@type": "boolean",
-          "@value": true
-        },
-        "extractors": [
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": "PortServiceName"
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": ""
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 2
-            },
-            "converters": [],
-            "configuration": {
-              "lookup_table_name": {
-                "@type": "string",
-                "@value": "Service Port Translator"
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "dest_port"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "Port to Service Name"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "LOOKUP_TABLE"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "NONE"
-            }
-          },
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": "src_port_name"
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": ""
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 1
-            },
-            "converters": [],
-            "configuration": {
-              "lookup_table_name": {
-                "@type": "string",
-                "@value": "Service Port Translator"
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "src_port"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "Source Port Name"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "LOOKUP_TABLE"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "NONE"
-            }
-          },
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": ""
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": "filterlog:"
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 0
-            },
-            "converters": [],
-            "configuration": {
-              "grok_pattern": {
-                "@type": "string",
-                "@value": "%{PFSENSE_LOG_ENTRY}"
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "message"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "PFsenseExtractor"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "GROK"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "STRING"
-            }
-          },
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": ""
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": "nginx:"
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 0
-            },
-            "converters": [],
-            "configuration": {
-              "grok_pattern": {
-                "@type": "string",
-                "@value": "%{PFSENSE_NGINX}"
-              },
-              "named_captures_only": {
-                "@type": "boolean",
-                "@value": true
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "message"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "pfsense_nginx"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "GROK"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "STRING"
-            }
-          },
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": "src_ip_whoisresult"
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": ""
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 0
-            },
-            "converters": [],
-            "configuration": {
-              "lookup_table_name": {
-                "@type": "string",
-                "@value": "whois"
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "src_ip"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "Whois Lookup"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "LOOKUP_TABLE"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "NONE"
-            }
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline",
-        "version": "1"
-      },
-      "id": "6af11786-0250-4e25-b5ae-9b7cd136d6f0",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "pfsense"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "pfsense"
-        },
-        "source": {
-          "@type": "string",
-          "@value": "pipeline \"pfsense\"\nstage 0 match either\nrule \"timestamp_pfsense_for_grafana\"\nend"
-        },
-        "connected_streams": [
-          {
-            "@type": "string",
-            "@value": "079c0b8e-020a-4c1d-a1d4-35215074aa61"
-          }
-        ]
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "grok_pattern",
         "version": "1"
       },
@@ -989,58 +624,6 @@
     {
       "v": "1",
       "type": {
-        "name": "lookup_table",
-        "version": "1"
-      },
-      "id": "c612092b-d60f-4de1-809f-f8fdf7ca9071",
-      "data": {
-        "default_single_value_type": {
-          "@type": "string",
-          "@value": "NULL"
-        },
-        "cache_name": {
-          "@type": "string",
-          "@value": "12230b84-0a4f-4fe7-9219-4e422a9ec7e9"
-        },
-        "name": {
-          "@type": "string",
-          "@value": "Service Port Translator"
-        },
-        "default_multi_value_type": {
-          "@type": "string",
-          "@value": "NULL"
-        },
-        "default_multi_value": {
-          "@type": "string",
-          "@value": ""
-        },
-        "data_adapter_name": {
-          "@type": "string",
-          "@value": "719c0d90-36de-4446-b695-e90cb57ff7f9"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Service Port Translator"
-        },
-        "default_single_value": {
-          "@type": "string",
-          "@value": ""
-        },
-        "description": {
-          "@type": "string",
-          "@value": "Service Port Translator to name service"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "grok_pattern",
         "version": "1"
       },
@@ -1156,34 +739,6 @@
       "data": {
         "name": "MINUTE",
         "pattern": "(?:[0-5][0-9])"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "f5d16b9a-6cff-4263-937c-b35dfc319106",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "get_browser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "get_browser"
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"get_browser\"\nwhen\n  has_field(\"http_user_agent\")\nthen\nlet parsed = grok(pattern: \"%{USER_BROWSER}\",value: to_string($message.http_user_agent),only_named_captures: true);\nset_fields(parsed);\nend"
-        }
       },
       "constraints": [
         {
@@ -1582,57 +1137,6 @@
         "pattern": "[A-Za-z]+(\\+[A-Za-z+]+)?"
       },
       "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "lookup_adapter",
-        "version": "1"
-      },
-      "id": "9e30fb29-2b60-4523-a06c-28c9efb2e558",
-      "data": {
-        "name": {
-          "@type": "string",
-          "@value": "whois"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Whois"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "This is the data adapter for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This adapter is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
-        },
-        "configuration": {
-          "type": {
-            "@type": "string",
-            "@value": "whois"
-          },
-          "registry": {
-            "@type": "string",
-            "@value": "ARIN"
-          },
-          "connect_timeout": {
-            "@type": "integer",
-            "@value": 1000
-          },
-          "read_timeout": {
-            "@type": "integer",
-            "@value": 1000
-          }
-        }
-      },
-      "constraints": [
-        {
-          "type": "plugin-version",
-          "plugin": "org.graylog.plugins.threatintel.ThreatIntelPlugin",
-          "version": ">=3.1.2"
-        },
         {
           "type": "server-version",
           "version": ">=3.1.2+9e96b08"
@@ -2092,60 +1596,6 @@
     {
       "v": "1",
       "type": {
-        "name": "lookup_cache",
-        "version": "1"
-      },
-      "id": "9743297d-c7d8-488c-b766-61e2df6e9510",
-      "data": {
-        "name": {
-          "@type": "string",
-          "@value": "whois-cache"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Whois Cache"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "This is the cache for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This cache is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
-        },
-        "configuration": {
-          "type": {
-            "@type": "string",
-            "@value": "guava_cache"
-          },
-          "max_size": {
-            "@type": "integer",
-            "@value": 1000
-          },
-          "expire_after_access": {
-            "@type": "long",
-            "@value": 0
-          },
-          "expire_after_access_unit": {
-            "@type": "string",
-            "@value": "DAYS"
-          },
-          "expire_after_write": {
-            "@type": "long",
-            "@value": 1
-          },
-          "expire_after_write_unit": {
-            "@type": "string",
-            "@value": "DAYS"
-          }
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "grok_pattern",
         "version": "1"
       },
@@ -2207,56 +1657,6 @@
       "data": {
         "name": "PFSENSE_ICMP_DATA",
         "pattern": "%{PFSENSE_ICMP_TYPE}%{PFSENSE_ICMP_RESPONSE}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "lookup_cache",
-        "version": "1"
-      },
-      "id": "12230b84-0a4f-4fe7-9219-4e422a9ec7e9",
-      "data": {
-        "name": {
-          "@type": "string",
-          "@value": "cache-service-port"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "Cache Service Port"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "Cache Service Port"
-        },
-        "configuration": {
-          "type": {
-            "@type": "string",
-            "@value": "guava_cache"
-          },
-          "max_size": {
-            "@type": "integer",
-            "@value": 1000
-          },
-          "expire_after_access": {
-            "@type": "long",
-            "@value": 60
-          },
-          "expire_after_access_unit": {
-            "@type": "string",
-            "@value": "SECONDS"
-          },
-          "expire_after_write": {
-            "@type": "long",
-            "@value": 0
-          }
-        }
       },
       "constraints": [
         {
@@ -2484,6 +1884,714 @@
     {
       "v": "1",
       "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "cfee612f-c15e-44f4-a75c-d7d37ded77c1",
+      "data": {
+        "name": "DATESTAMP_OTHER",
+        "pattern": "%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{TZ} %{YEAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "c5a31750-6e4a-4a9f-852b-ba099eae85c6",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfsense"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 262144
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 5442
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 1
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": false
+          }
+        },
+        "static_fields": {
+          "pfsense": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "PortServiceName"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
+            "configuration": {
+              "lookup_table_name": {
+                "@type": "string",
+                "@value": "Service Port Translator"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "dest_port"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Port to Service Name"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "LOOKUP_TABLE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "src_port_name"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "lookup_table_name": {
+                "@type": "string",
+                "@value": "Service Port Translator"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "src_port"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Source Port Name"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "LOOKUP_TABLE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "filterlog:"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "grok_pattern": {
+                "@type": "string",
+                "@value": "%{PFSENSE_LOG_ENTRY}"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "PFsenseExtractor"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "GROK"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "nginx:"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "grok_pattern": {
+                "@type": "string",
+                "@value": "%{PFSENSE_NGINX}"
+              },
+              "named_captures_only": {
+                "@type": "boolean",
+                "@value": true
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "pfsense_nginx"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "GROK"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "src_ip_whoisresult"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "lookup_table_name": {
+                "@type": "string",
+                "@value": "whois"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "src_ip"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Whois Lookup"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "LOOKUP_TABLE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "9e30fb29-2b60-4523-a06c-28c9efb2e558",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "whois"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the data adapter for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This adapter is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "whois"
+          },
+          "registry": {
+            "@type": "string",
+            "@value": "ARIN"
+          },
+          "connect_timeout": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "read_timeout": {
+            "@type": "integer",
+            "@value": 1000
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "plugin-version",
+          "plugin": "org.graylog.plugins.threatintel.ThreatIntelPlugin",
+          "version": ">=3.1.2"
+        },
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "719c0d90-36de-4446-b695-e90cb57ff7f9",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "cvs-port-translate"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "CVS Port Translate"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Table CVS for translate port service to service name"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "csvfile"
+          },
+          "path": {
+            "@type": "string",
+            "@value": "/etc/graylog/server/service-names-port-numbers.csv"
+          },
+          "separator": {
+            "@type": "string",
+            "@value": ","
+          },
+          "quotechar": {
+            "@type": "string",
+            "@value": "\""
+          },
+          "key_column": {
+            "@type": "string",
+            "@value": "Port"
+          },
+          "value_column": {
+            "@type": "string",
+            "@value": "Service"
+          },
+          "check_interval": {
+            "@type": "long",
+            "@value": 3
+          },
+          "case_insensitive_lookup": {
+            "@type": "boolean",
+            "@value": false
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "9743297d-c7d8-488c-b766-61e2df6e9510",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "whois-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois Cache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the cache for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This cache is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 0
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "DAYS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 1
+          },
+          "expire_after_write_unit": {
+            "@type": "string",
+            "@value": "DAYS"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "12230b84-0a4f-4fe7-9219-4e422a9ec7e9",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "cache-service-port"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Cache Service Port"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Cache Service Port"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "f60339c5-6708-48e5-82db-39f8902603b8",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "9743297d-c7d8-488c-b766-61e2df6e9510"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "whois"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "9e30fb29-2b60-4523-a06c-28c9efb2e558"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the lookup table for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This lookup table is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "c612092b-d60f-4de1-809f-f8fdf7ca9071",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "12230b84-0a4f-4fe7-9219-4e422a9ec7e9"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "Service Port Translator"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "719c0d90-36de-4446-b695-e90cb57ff7f9"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Service Port Translator"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Service Port Translator to name service"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "6af11786-0250-4e25-b5ae-9b7cd136d6f0",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "pfsense"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "pfsense"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"pfsense\"\nstage 0 match either\nrule \"timestamp_pfsense_for_grafana\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "079c0b8e-020a-4c1d-a1d4-35215074aa61"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "f5d16b9a-6cff-4263-937c-b35dfc319106",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "get_browser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "get_browser"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"get_browser\"\nwhen\n  has_field(\"http_user_agent\")\nthen\nlet parsed = grok(pattern: \"%{USER_BROWSER}\",value: to_string($message.http_user_agent),only_named_captures: true);\nset_fields(parsed);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "9ac1b938-8a42-4294-a107-4823b0bdc1f5",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "write_utc_timestamp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "write_utc_timestamp just in case your syslog provides non-utc unmarked timestamped"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"write_utc_timestamp\"\nwhen has_field(\"timestamp\")\nthen\nlet source_timestamp = parse_date(substring(to_string(now(\"Etc/UTC\")),0,23), \"yyyy-MM-dd'T'HH:mm:ss.SSS\");\nlet dest_timestamp = format_date(source_timestamp,\"yyyy-MM-dd HH:mm:ss\");\nset_field(\"utc_timestamp\", dest_timestamp);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "stream",
         "version": "1"
       },
@@ -2561,114 +2669,6 @@
         "default_stream": {
           "@type": "boolean",
           "@value": false
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "lookup_adapter",
-        "version": "1"
-      },
-      "id": "719c0d90-36de-4446-b695-e90cb57ff7f9",
-      "data": {
-        "name": {
-          "@type": "string",
-          "@value": "cvs-port-translate"
-        },
-        "title": {
-          "@type": "string",
-          "@value": "CVS Port Translate"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "Table CVS for translate port service to service name"
-        },
-        "configuration": {
-          "type": {
-            "@type": "string",
-            "@value": "csvfile"
-          },
-          "path": {
-            "@type": "string",
-            "@value": "/etc/graylog/server/service-names-port-numbers.csv"
-          },
-          "separator": {
-            "@type": "string",
-            "@value": ","
-          },
-          "quotechar": {
-            "@type": "string",
-            "@value": "\""
-          },
-          "key_column": {
-            "@type": "string",
-            "@value": "Port"
-          },
-          "value_column": {
-            "@type": "string",
-            "@value": "Service"
-          },
-          "check_interval": {
-            "@type": "long",
-            "@value": 3
-          },
-          "case_insensitive_lookup": {
-            "@type": "boolean",
-            "@value": false
-          }
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "cfee612f-c15e-44f4-a75c-d7d37ded77c1",
-      "data": {
-        "name": "DATESTAMP_OTHER",
-        "pattern": "%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{TZ} %{YEAR}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "b95a87ee-9b7d-4eb7-bc89-b51d845d6213",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "timestamp_pfsense_for_grafana"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "timestamp_pfsense_for_grafana"
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"timestamp_pfsense_for_grafana\"\nwhen has_field(\"timestamp\")\nthen\n// the following date format assumes there's no time zone in the string\nlet source_timestamp = parse_date(substring(to_string(now(\"Europe/Budapest\")),0,23), \"yyyy-MM-dd'T'HH:mm:ss.SSS\");\nlet dest_timestamp = format_date(source_timestamp,\"yyyy-MM-dd HH:mm:ss\");\nset_field(\"real_timestamp\", dest_timestamp);\nend"
         }
       },
       "constraints": [
