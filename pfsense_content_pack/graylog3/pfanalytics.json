@@ -2517,7 +2517,7 @@
         },
         "source": {
           "@type": "string",
-          "@value": "pipeline \"pfsense\"\nstage 0 match either\nrule \"timestamp_pfsense_for_grafana\"\nend"
+          "@value": "pipeline \"pfsense\"\nstage 0 match either\nrule \"write_utc_timestamp\"\nend"
         },
         "connected_streams": [
           {
