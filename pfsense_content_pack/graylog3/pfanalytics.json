@@ -1,7 +1,7 @@
 {
   "v": "1",
   "id": "a114b211-26a9-471c-a334-91fef22788d3",
-  "rev": 2,
+  "rev": 4,
   "name": "pfintel",
   "summary": "pfSense Intelligence",
   "description": "",
@@ -2595,7 +2595,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "079c0b8e-020a-4c1d-a1d4-35215074aa61",
+      "id": "4e5233b3-6772-4b60-991c-402bc8ce0c6a",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -2633,7 +2633,7 @@
           {
             "type": {
               "@type": "string",
-              "@value": "CONTAINS"
+              "@value": "REGEX"
             },
             "field": {
               "@type": "string",
@@ -2641,7 +2641,7 @@
             },
             "value": {
               "@type": "string",
-              "@value": "filterlog:"
+              "@value": "filterlog.*:"
             },
             "inverted": {
               "@type": "boolean",
@@ -2674,7 +2674,7 @@
       "constraints": [
         {
           "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
+          "version": ">=3.1.3+cda805f"
         }
       ]
     }
