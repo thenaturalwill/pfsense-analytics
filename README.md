@@ -84,7 +84,7 @@ ln -s GeoLite2-City_20191105/GeoLite2-City.mmdb .
 Finally, spin up the stack with:
 
 ```
-sudo docker-compose up
+sudo docker-compose up -d
 ```
 
 This should expose you the following services externally:
