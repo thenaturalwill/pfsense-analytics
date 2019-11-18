@@ -155,7 +155,7 @@
           ],
           "query": "iface:$iface AND src_ip:$src_ip",
           "refId": "A",
-          "timeField": "timestamp"
+          "timeField": "utc_timestamp"
         }
       ],
       "thresholds": "2,5",
