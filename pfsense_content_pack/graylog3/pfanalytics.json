@@ -1,7 +1,7 @@
 {
   "v": "1",
   "id": "a114b211-26a9-471c-a334-91fef22788d3",
-  "rev": 4,
+  "rev": 7,
   "name": "pfintel",
   "summary": "pfSense Intelligence",
   "description": "",
@@ -1902,10 +1902,784 @@
     {
       "v": "1",
       "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "96335e56-13a3-47c8-a9b2-0ca772843716",
+      "data": {
+        "name": "PFSENSE_LOG_ENTRY",
+        "pattern": "%{PFSENSE_LOG_DATA}%{PFSENSE_IP_SPECIFIC_DATA}%{PFSENSE_IP_DATA}%{PFSENSE_PROTOCOL_DATA}?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f74ad6bd-0e63-46d8-855d-7037d4123447",
+      "data": {
+        "name": "PFSENSE_NGINX",
+        "pattern": "%{SYSLOGHOST:hostname} %{DATA:pfsense_service}: %{IPORHOST:remote_addr} - (%{DATA:remote_user} )?- \\[%{HTTPDATE:access_time}\\] \\\"%{WORD:request_verb} %{DATA:request_path} HTTP/%{NUMBER:http_version}\\\" %{NUMBER:response_code} %{NUMBER:response_bytes} \\\"%{DATA:http_referer}\\\" \\\"%{DATA:http_user_agent}\\\""
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "dfda8b64-ca35-4fb1-b363-490ac33e4da1",
+      "data": {
+        "name": "PFSENSE_LOG_DATA",
+        "pattern": "%{INT:rule},%{INT:sub_rule}?,,%{INT:tracker},%{DATA:iface},%{WORD:reason},%{WORD:action},%{WORD:direction},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "c524df78-d631-475a-b057-f1e974eaf211",
+      "data": {
+        "name": "PFSENSE_IP_DATA",
+        "pattern": "%{INT:length},%{IP:src_ip},%{IP:dest_ip},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "53e5d97f-9774-4f7f-88bf-74ebbfe880f5",
+      "data": {
+        "name": "PFSENSE_PROTOCOL_DATA",
+        "pattern": "%{PFSENSE_TCP_DATA}|%{PFSENSE_UDP_DATA}|%{PFSENSE_ICMP_DATA}|%{PFSENSE_CARP_DATA}|%{PFSENSE_IGMP_DATA}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a1caf886-be6f-4a9d-a71c-f9ba34ccfb0f",
+      "data": {
+        "name": "PFSENSE_IP_SPECIFIC_DATA",
+        "pattern": "%{PFSENSE_IPv4_SPECIFIC_DATA}|%{PFSENSE_IPv6_SPECIFIC_DATA}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "90aeac91-515a-4d59-9973-bbb5a3b6637b",
+      "data": {
+        "name": "SYSLOGHOST",
+        "pattern": "%{IPORHOST}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "224b1a05-a638-4b12-aad5-1b6600774764",
+      "data": {
+        "name": "WORD",
+        "pattern": "\\b\\w+\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "c9a377bc-516c-46f0-973a-91d19c3f428c",
+      "data": {
+        "name": "NUMBER",
+        "pattern": "(?:%{BASE10NUM})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "2a8c0dfe-a4bf-4af5-89c7-3d453eed042c",
+      "data": {
+        "name": "DATA",
+        "pattern": ".*?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "84a0708f-a4ab-4071-b833-1c6480130116",
+      "data": {
+        "name": "HTTPDATE",
+        "pattern": "%{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME} %{INT}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "7d264ef8-8cda-4378-bf14-685e578a8f4a",
+      "data": {
+        "name": "IPORHOST",
+        "pattern": "(?:%{IP}|%{HOSTNAME})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "9aceb6e8-c47a-4d24-99fa-322dfa30084b",
+      "data": {
+        "name": "INT",
+        "pattern": "(?:[+-]?(?:[0-9]+))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "685f3b5c-dbaa-48e3-b47f-9cd411630f58",
+      "data": {
+        "name": "IP",
+        "pattern": "(?:%{IPV6}|%{IPV4})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "138a6bd5-1fde-4b10-93fa-b0305e1ff49a",
+      "data": {
+        "name": "PFSENSE_IGMP_DATA",
+        "pattern": "datalength=%{INT:data_length}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "89277a62-4b98-4643-99b6-6863e35c9502",
+      "data": {
+        "name": "PFSENSE_UDP_DATA",
+        "pattern": "%{INT:src_port},%{INT:dest_port},%{INT:data_length}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "4fe15084-0af5-4e5d-9289-73256176c910",
+      "data": {
+        "name": "PFSENSE_TCP_DATA",
+        "pattern": "%{INT:src_port},%{INT:dest_port},%{INT:data_length},%{WORD:tcp_flags},%{INT:sequence_number},%{INT:ack_number},%{INT:tcp_window},%{DATA:urg_data},%{GREEDYDATA:tcp_options}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "be8adc79-71ec-4236-8cae-e2aadeb3ab75",
+      "data": {
+        "name": "PFSENSE_ICMP_DATA",
+        "pattern": "%{PFSENSE_ICMP_TYPE}%{PFSENSE_ICMP_RESPONSE}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "cfee328f-593c-460a-ad96-8c1a484d9417",
+      "data": {
+        "name": "PFSENSE_CARP_DATA",
+        "pattern": "%{WORD:carp_type},%{INT:carp_ttl},%{INT:carp_vhid},%{INT:carp_version},%{INT:carp_advbase},%{INT:carp_advskew}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1035f43b-67eb-45a5-82bb-9390e277e964",
+      "data": {
+        "name": "PFSENSE_IPv6_SPECIFIC_DATA",
+        "pattern": "(?<ip_ver>(6)),%{BASE16NUM:ipv6_Flag1},%{WORD:ipv6_Flag2},%{WORD:flow_label},%{WORD:options},%{INT:protocol_id},%{INT:length},%{IPV6:src_ip},%{IPV6:dest_ip},%{WORD:ipv6_HPH},%{WORD:ipv6_padn},%{WORD:ipv6_Alert},%{WORD:ipv6_Flag3},%{WORD:ipv6_Flag4}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "215601c4-740a-4562-b1e6-eac315b8cbcd",
+      "data": {
+        "name": "PFSENSE_IPv4_SPECIFIC_DATA",
+        "pattern": "(?<ip_ver>(4)),%{BASE16NUM:tos},%{WORD:ecn}?,%{INT:ttl},%{INT:id},%{INT:offset},%{WORD:flags},%{INT:proto_id},%{WORD:proto},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a4ec4a17-526e-4131-b5f2-5386dd644e59",
+      "data": {
+        "name": "BASE10NUM",
+        "pattern": "(?<![0-9.+-])(?>[+-]?(?:(?:[0-9]+(?:\\.[0-9]+)?)|(?:\\.[0-9]+)))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "d03d36a0-25f3-495f-9c1d-5523e2e12e52",
+      "data": {
+        "name": "MONTH",
+        "pattern": "\\b(?:Jan(?:uary|uar)?|Feb(?:ruary|ruar)?|M(?:a|ä)?r(?:ch|z)?|Apr(?:il)?|Ma(?:y|i)?|Jun(?:e|i)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|O(?:c|k)?t(?:ober)?|Nov(?:ember)?|De(?:c|z)(?:ember)?)\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b37b107d-ff9e-45ba-8bae-caaf7ccf23e1",
+      "data": {
+        "name": "YEAR",
+        "pattern": "(?>\\d\\d){1,2}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ed73d8e9-94c3-47dc-9b8b-4b4f5fd09b3c",
+      "data": {
+        "name": "TIME",
+        "pattern": "(?!<[0-9])%{HOUR}:%{MINUTE}(?::%{SECOND})(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ae2cd52d-9385-408a-918b-2da8660a614b",
+      "data": {
+        "name": "MONTHDAY",
+        "pattern": "(?:(?:0[1-9])|(?:[12][0-9])|(?:3[01])|[1-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "e09054a1-470a-4f1f-9d52-db1104e74c1e",
+      "data": {
+        "name": "HOSTNAME",
+        "pattern": "\\b(?:[0-9A-Za-z][0-9A-Za-z-]{0,62})(?:\\.(?:[0-9A-Za-z][0-9A-Za-z-]{0,62}))*(\\.?|\\b)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f0840c42-e3ab-463a-bb44-9dd7f6541df0",
+      "data": {
+        "name": "IPV6",
+        "pattern": "((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "2e437a4c-110e-4da9-a27a-e5b98aa219c9",
+      "data": {
+        "name": "IPV4",
+        "pattern": "(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ddf992bb-e0bf-461e-845f-5c369b76e5d0",
+      "data": {
+        "name": "GREEDYDATA",
+        "pattern": ".*"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "6181fe1e-13ec-4142-9524-da8c01861801",
+      "data": {
+        "name": "PFSENSE_ICMP_TYPE",
+        "pattern": "(?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "bf46e9b5-0373-40de-b620-f0703167ec78",
+      "data": {
+        "name": "PFSENSE_ICMP_RESPONSE",
+        "pattern": "%{PFSENSE_ICMP_ECHO_REQ_REPLY}|%{PFSENSE_ICMP_UNREACHPORT}| %{PFSENSE_ICMP_UNREACHPROTO}|%{PFSENSE_ICMP_UNREACHABLE}|%{PFSENSE_ICMP_NEED_FLAG}|%{PFSENSE_ICMP_TSTAMP}|%{PFSENSE_ICMP_TSTAMP_REPLY}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "6a83dda1-c8da-42fd-96df-93d229e5b884",
+      "data": {
+        "name": "BASE16NUM",
+        "pattern": "(?<![0-9A-Fa-f])(?:[+-]?(?:0x)?(?:[0-9A-Fa-f]+))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "4ad7a513-2bbe-4d92-bddc-57f5740911a8",
+      "data": {
+        "name": "HOUR",
+        "pattern": "(?:2[0123]|[01]?[0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "fa8d67b1-e829-4761-b76f-093565c14124",
+      "data": {
+        "name": "MINUTE",
+        "pattern": "(?:[0-5][0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "05fe82a3-12fa-47a9-b90e-b6a1f0064f37",
+      "data": {
+        "name": "SECOND",
+        "pattern": "(?:(?:[0-5]?[0-9]|60)(?:[:.,][0-9]+)?)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "94af2630-6e81-43bf-9923-970e872afa7c",
+      "data": {
+        "name": "PFSENSE_ICMP_TSTAMP",
+        "pattern": "%{INT:icmp_tstamp_id},%{INT:icmp_tstamp_sequence}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "fcf498e8-f567-4445-834c-29968039551c",
+      "data": {
+        "name": "PFSENSE_ICMP_UNREACHPROTO",
+        "pattern": "%{IP:icmp_unreach_dest_ip},%{WORD:icmp_unreachproto_protocol}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a5575cb9-c9b6-489b-95e7-5c1d9b4812d1",
+      "data": {
+        "name": "PFSENSE_ICMP_UNREACHPORT",
+        "pattern": "%{IP:icmp_unreachport_dest_ip},%{WORD:icmp_unreachport_protocol},%{INT:icmp_unreachport_port}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b988f6e8-a6a7-432e-b3b0-a6b49d0380b0",
+      "data": {
+        "name": "PFSENSE_ICMP_UNREACHABLE",
+        "pattern": "%{GREEDYDATA:icmp_unreachable}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "eeb3b661-5530-49e9-9a2c-ff22d1cd44f0",
+      "data": {
+        "name": "PFSENSE_ICMP_TSTAMP_REPLY",
+        "pattern": "%{INT:icmp_tstamp_reply_id},%{INT:icmp_tstamp_reply_sequence},%{INT:icmp_tstamp_reply_otime},%{INT:icmp_tstamp_reply_rtime},%{INT:icmp_tstamp_reply_ttime}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "e649be6a-04db-4121-90da-bd22889d3515",
+      "data": {
+        "name": "PFSENSE_ICMP_ECHO_REQ_REPLY",
+        "pattern": "%{INT:icmp_echo_id},%{INT:icmp_echo_sequence}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ae7c28d4-274d-4e7e-b4f6-442cc5a41719",
+      "data": {
+        "name": "PFSENSE_ICMP_NEED_FLAG",
+        "pattern": "%{IP:icmp_need_flag_ip},%{INT:icmp_need_flag_mtu}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "c5a31750-6e4a-4a9f-852b-ba099eae85c6",
+      "id": "289d0532-468d-41d4-b5f4-91e965adb00a",
       "data": {
         "title": {
           "@type": "string",
@@ -2174,7 +2948,7 @@
       "constraints": [
         {
           "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
+          "version": ">=3.1.3+cda805f"
         }
       ]
     },
@@ -2294,6 +3068,119 @@
     {
       "v": "1",
       "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "52f20a08-2b30-48a6-b829-b72ccb8900cf",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "cvs-port-translate"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "CVS Port Translate"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Table CVS for translate port service to service name"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "csvfile"
+          },
+          "path": {
+            "@type": "string",
+            "@value": "/etc/graylog/server/service-names-port-numbers.csv"
+          },
+          "separator": {
+            "@type": "string",
+            "@value": ","
+          },
+          "quotechar": {
+            "@type": "string",
+            "@value": "\""
+          },
+          "key_column": {
+            "@type": "string",
+            "@value": "Port"
+          },
+          "value_column": {
+            "@type": "string",
+            "@value": "Service"
+          },
+          "check_interval": {
+            "@type": "long",
+            "@value": 3
+          },
+          "case_insensitive_lookup": {
+            "@type": "boolean",
+            "@value": false
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "c49123cc-90a4-414d-bfaa-3d444292f2c6",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "whois"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the data adapter for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This adapter is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "whois"
+          },
+          "registry": {
+            "@type": "string",
+            "@value": "ARIN"
+          },
+          "connect_timeout": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "read_timeout": {
+            "@type": "integer",
+            "@value": 1000
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "plugin-version",
+          "plugin": "org.graylog.plugins.threatintel.ThreatIntelPlugin",
+          "version": ">=3.1.3"
+        },
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "lookup_cache",
         "version": "1"
       },
@@ -2392,6 +3279,110 @@
         {
           "type": "server-version",
           "version": ">=3.1.2+9e96b08"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "400e91bc-ba5d-4336-b603-943447f0713d",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "cache-service-port"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Cache Service Port"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Cache Service Port"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 60
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "SECONDS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "fb025dab-2358-42f4-8f4d-c4e11a4885d4",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "whois-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois Cache"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the cache for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This cache is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 0
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "DAYS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 1
+          },
+          "expire_after_write_unit": {
+            "@type": "string",
+            "@value": "DAYS"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
         }
       ]
     },
@@ -2502,14 +3493,118 @@
     {
       "v": "1",
       "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "211d2076-1e31-4605-8d19-4cd705a223e0",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "400e91bc-ba5d-4336-b603-943447f0713d"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "Service Port Translator"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "52f20a08-2b30-48a6-b829-b72ccb8900cf"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Service Port Translator"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Service Port Translator to name service"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "add787e8-6e94-42cd-94d4-58efe06a13f0",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "fb025dab-2358-42f4-8f4d-c4e11a4885d4"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "whois"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "c49123cc-90a4-414d-bfaa-3d444292f2c6"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "Whois"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "This is the lookup table for the WHOIS database, listing registered users of Internet resources like IPs, Netblocks or Domain Names. This lookup table is used internally by Graylog's Threat Intel Plugin. Do not delete it manually."
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "pipeline",
         "version": "1"
       },
-      "id": "6af11786-0250-4e25-b5ae-9b7cd136d6f0",
+      "id": "f52573bf-838e-489f-bc9c-41717820a628",
       "data": {
         "title": {
           "@type": "string",
-          "@value": "pfsense"
+          "@value": "pfs"
         },
         "description": {
           "@type": "string",
@@ -2517,19 +3612,19 @@
         },
         "source": {
           "@type": "string",
-          "@value": "pipeline \"pfsense\"\nstage 0 match either\nrule \"write_utc_timestamp\"\nend"
+          "@value": "pipeline \"pfs\"\nstage 0 match either\nrule \"write_utc_timestamp\"\nend"
         },
         "connected_streams": [
           {
             "@type": "string",
-            "@value": "079c0b8e-020a-4c1d-a1d4-35215074aa61"
+            "@value": "d0bb0977-d2c4-43b2-88b3-837d3c58a47d"
           }
         ]
       },
       "constraints": [
         {
           "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
+          "version": ">=3.1.3+cda805f"
         }
       ]
     },
@@ -2539,35 +3634,7 @@
         "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "f5d16b9a-6cff-4263-937c-b35dfc319106",
-      "data": {
-        "title": {
-          "@type": "string",
-          "@value": "get_browser"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "get_browser"
-        },
-        "source": {
-          "@type": "string",
-          "@value": "rule \"get_browser\"\nwhen\n  has_field(\"http_user_agent\")\nthen\nlet parsed = grok(pattern: \"%{USER_BROWSER}\",value: to_string($message.http_user_agent),only_named_captures: true);\nset_fields(parsed);\nend"
-        }
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.2+9e96b08"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "pipeline_rule",
-        "version": "1"
-      },
-      "id": "9ac1b938-8a42-4294-a107-4823b0bdc1f5",
+      "id": "0b60344a-e4d1-441b-a45c-4c35dbd5266a",
       "data": {
         "title": {
           "@type": "string",
@@ -2592,10 +3659,38 @@
     {
       "v": "1",
       "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "a3d4b903-7a1f-4d8e-9cb1-b915ca81f6db",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "get_browser"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "get_browser"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"get_browser\"\nwhen\n  has_field(\"http_user_agent\")\nthen\nlet parsed = grok(pattern: \"%{USER_BROWSER}\",value: to_string($message.http_user_agent),only_named_captures: true);\nset_fields(parsed);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "stream",
         "version": "1"
       },
-      "id": "4e5233b3-6772-4b60-991c-402bc8ce0c6a",
+      "id": "d0bb0977-d2c4-43b2-88b3-837d3c58a47d",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
