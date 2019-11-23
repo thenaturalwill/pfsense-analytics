@@ -25,11 +25,10 @@ services:
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
-    image: 'graylog/graylog:3.1'
+    build: graylog/.
     volumes:
       - 'graylog_journal:/usr/share/graylog/data/journal'
       - './service-names-port-numbers.csv:/etc/graylog/server/service-names-port-numbers.csv'
-      - './GeoLite2-City.mmdb:/etc/graylog/server/GeoLite2-City.mmdb'
     env_file:
       - ./graylog.env
     links:
