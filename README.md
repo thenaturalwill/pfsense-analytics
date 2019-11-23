@@ -1,4 +1,8 @@
-This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose, still there is a number of manual steps required.
+This is a fork of https://github.com/lephisto/pfsense-analytics
+
+The original project is really well done but I wanted to organize a few things for clarity and elinimate a few manual steps
+
+This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose.
 
 The whole metric approach is split into several subtopics.
 
@@ -23,8 +27,6 @@ Firewall Insights:
 Moar Insights:
 ![fw2](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/fw2.png)
 
-
-
 This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but should work flawless with any debian'ish linux distro.
 
 # 0. System requirements
@@ -42,7 +44,7 @@ sudo apt install docker.io docker-compose git
 Let's pull this repo to the Server where you intend to run the Analytics front- and backend.
 
 ```
-git clone https://github.com/lephisto/pfsense-analytics
+git clone https://github.com/MatthewJSalerno/pfsense-analytics.git
 cd pfsense-analytics
 ```
 
@@ -58,7 +60,7 @@ to make it permanent edit /etc/sysctl.conf and add the line:
 vm.max_map_count=262144
 ```
 
-Next edit the docker-compose.yml file and set some values:
+Next edit the ./pfsense-analytics/Docker/graylog.env file and set some values:
 
 The URL you want your graylog to be available under:
 - GRAYLOG_HTTP_EXTERNAL_URI (eg: http://localhost:9000)
@@ -70,6 +72,7 @@ A salt for encrypting your graylog passwords
 Finally, spin up the stack with:
 
 ```
+cd ./Docker
 sudo docker-compose up -d
 ```
 
