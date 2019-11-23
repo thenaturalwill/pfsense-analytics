@@ -70,6 +70,7 @@ services:
       - elasticsearch
     depends_on:
       - elasticsearch
+
   influxdb:
     image: 'influxdb:latest'
     env_file:
