@@ -67,17 +67,12 @@ A salt for encrypting your graylog passwords
 - GRAYLOG_PASSWORD_SECRET (Change that _now_)
 
 
-Now let's pull the GeoIP Database from maxmind:
+Now let's pull the GeoIP Database from maxmind and symlink it:
 
 ```
 curl --output mm.tar.gz https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
-tar xfzv mm.tar.gz
-```
-
-.. symlink (take correct directory, includes date..):
-
-```
-ln -s GeoLite2-City_20191105/GeoLite2-City.mmdb .
+mkdir GeoLite2-City && tar zxf mm.tar.gz -C GeoLite2-City --strip-components 1
+ln -s GeoLite2-City/GeoLite2-City.mmdb .
 ```
 
 
