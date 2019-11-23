@@ -25,7 +25,10 @@ services:
 
   # Graylog: https://hub.docker.com/r/graylog/graylog/
   graylog:
-    build: graylog/.
+    build: 
+      context: ./graylog/.
+      args:
+        - GRAYLOG_PLUGIN_DIR
     volumes:
       - 'graylog_journal:/usr/share/graylog/data/journal'
       - './service-names-port-numbers.csv:/etc/graylog/server/service-names-port-numbers.csv'
@@ -70,6 +73,10 @@ services:
       - elasticsearch
     depends_on:
       - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100M"
 
   influxdb:
     image: 'influxdb:latest'
@@ -79,6 +86,10 @@ services:
       - '8086:8086'
     volumes:
       - 'influxdb:/var/lib/influxdb'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100M"
 
   grafana:
     image: 'grafana/grafana:latest'
@@ -95,6 +106,10 @@ services:
     depends_on:
       - elasticsearch
       - influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100M"
 
 # Volumes for persisting data, see https://docs.docker.com/engine/admin/volumes/volumes/
 volumes:
