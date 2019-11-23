@@ -60,7 +60,7 @@ to make it permanent edit /etc/sysctl.conf and add the line:
 vm.max_map_count=262144
 ```
 
-Next edit the ./pfsense-analytics/Docker/graylog.env file and set some values:
+Next edit the ./Docker/graylog.env file and set some values:
 
 The URL you want your graylog to be available under:
 - GRAYLOG_HTTP_EXTERNAL_URI (eg: http://localhost:9000)
