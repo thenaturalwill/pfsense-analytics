@@ -79,6 +79,14 @@ cd ./Docker
 sudo docker-compose up -d
 ```
 
+Note: graylog will be built the first time you run docker-compose.  The below step is only for updating the GeiLite DB.
+To update the geolite.maxmind.com GeoLite2-City database, simply run:
+```
+cd ./Docker
+sudo docker-compose up -d --no-deps --build graylog
+```
+
+
 This should expose you the following services externally:
 
 | Service       | URL                   | Default Login  | Purpose |
