@@ -62,6 +62,9 @@ vm.max_map_count=262144
 
 Next edit the ./Docker/graylog.env file and set some values:
 
+Set the proper Time Zone: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+- GRAYLOG_TIMEZONE=Europe/Berlin
+
 The URL you want your graylog to be available under:
 - GRAYLOG_HTTP_EXTERNAL_URI (eg: http://localhost:9000)
 
