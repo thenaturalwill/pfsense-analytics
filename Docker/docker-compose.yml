@@ -27,8 +27,6 @@ services:
   graylog:
     build: 
       context: ./graylog/.
-      args:
-        - GRAYLOG_PLUGIN_DIR
     volumes:
       - 'graylog_journal:/usr/share/graylog/data/journal'
       - './service-names-port-numbers.csv:/etc/graylog/server/service-names-port-numbers.csv'
