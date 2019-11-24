@@ -1,5 +1,7 @@
 This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose. Thanks as well to MatthewJSalerno for some Streamlining of the Graylog provisioning Process.
 
+If it's easier for you, you can find a video guide here:  https://youtu.be/uOfPzueH6MA
+
 The whole metric approach is split into several subtopics.
 
 | Metric type           | Stored via                | stored in       | Visualisation  |
