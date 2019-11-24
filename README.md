@@ -98,7 +98,8 @@ your Graylog Instance on http://localhost:9000. Let's see if we can login with u
 
 Next we have to create the Index in Elasticsearch for the pfSense logs in System / Indices
 
-![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Indice-Pfsense-606x1024.png)
+![Index](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/SS_Indexcreation.png)
+
 
 Index shard 4 and Index replicas 0, the rotation of the Index time index and the retention can be deleted, closure of an index according to the maximum number of indices or doing nothing. In my case, I set it to rotate monthly and eliminate the indexes after 12 months. In short there are many ways to establish the rotation. This index is created immediately.
 
@@ -108,7 +109,20 @@ Index shard 4 and Index replicas 0, the rotation of the Index time index and the
 
 In Graylog go to System->Configurations and:
 
-1. Change the order by Message processors, to have "GeoIP Resolver" on the bottom
+1. Change the order by Message processors, to have the following sequence:
+
+```
+1. AWS Instance Name Lookup
+2. Message Filter Chain
+3. Pipeline Processor
+4. GeoIP Resolver
+```
+
+This should look like:
+
+![Index](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/SS_processorsequence.png)
+
+
 2. In the Plugins section update enable the Geo-Location Processor
 
 
