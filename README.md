@@ -1,8 +1,4 @@
-This is a fork of https://github.com/lephisto/pfsense-analytics
-
-The original project is really well done but I wanted to organize a few things for clarity and elinimate a few manual steps
-
-This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose.
+This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose. Thanks as well to MatthewJSalerno for some Streamlining of the Graylog provisioning Process.
 
 The whole metric approach is split into several subtopics.
 
@@ -44,7 +40,7 @@ sudo apt install docker.io docker-compose git
 Let's pull this repo to the Server where you intend to run the Analytics front- and backend.
 
 ```
-git clone https://github.com/MatthewJSalerno/pfsense-analytics.git
+git clone https://github.com/lephisto/pfsense-analytics.git
 cd pfsense-analytics
 ```
 
