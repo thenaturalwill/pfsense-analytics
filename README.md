@@ -1,4 +1,8 @@
-This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose, still there is a number of manual steps required.
+This is a fork of https://github.com/lephisto/pfsense-analytics
+
+The original project is really well done but I wanted to organize a few things for clarity and elinimate a few manual steps
+
+This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose.
 
 The whole metric approach is split into several subtopics.
 
@@ -23,8 +27,6 @@ Firewall Insights:
 Moar Insights:
 ![fw2](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/fw2.png)
 
-
-
 This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but should work flawless with any debian'ish linux distro.
 
 # 0. System requirements
@@ -42,7 +44,7 @@ sudo apt install docker.io docker-compose git
 Let's pull this repo to the Server where you intend to run the Analytics front- and backend.
 
 ```
-git clone https://github.com/lephisto/pfsense-analytics
+git clone https://github.com/MatthewJSalerno/pfsense-analytics.git
 cd pfsense-analytics
 ```
 
@@ -58,7 +60,10 @@ to make it permanent edit /etc/sysctl.conf and add the line:
 vm.max_map_count=262144
 ```
 
-Next edit the docker-compose.yml file and set some values:
+Next edit the ./Docker/graylog.env file and set some values:
+
+Set the proper Time Zone: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+- GRAYLOG_TIMEZONE=Europe/Berlin
 
 The URL you want your graylog to be available under:
 - GRAYLOG_HTTP_EXTERNAL_URI (eg: http://localhost:9000)
@@ -67,25 +72,20 @@ A salt for encrypting your graylog passwords
 - GRAYLOG_PASSWORD_SECRET (Change that _now_)
 
 
-Now let's pull the GeoIP Database from maxmind:
-
-```
-curl --output mm.tar.gz https://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
-tar xfzv mm.tar.gz
-```
-
-.. symlink (take correct directory, includes date..):
-
-```
-ln -s GeoLite2-City_20191105/GeoLite2-City.mmdb .
-```
-
-
 Finally, spin up the stack with:
 
 ```
+cd ./Docker
 sudo docker-compose up -d
 ```
+
+Note: graylog will be built the first time you run docker-compose.  The below step is only for updating the GeiLite DB.
+To update the geolite.maxmind.com GeoLite2-City database, simply run:
+```
+cd ./Docker
+sudo docker-compose up -d --no-deps --build graylog
+```
+
 
 This should expose you the following services externally:
 
