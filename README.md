@@ -46,12 +46,6 @@ git clone https://github.com/lephisto/pfsense-analytics.git
 cd pfsense-analytics
 ```
 
-Optional: If you're doing this on a Videoguide I made, pick a release:
-
-```
-git checkout v24112019
-```
-
 We have to adjust some Systemlimits to allow Elasticsearch to run:
 
 ```
