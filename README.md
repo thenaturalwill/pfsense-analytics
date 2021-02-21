@@ -257,4 +257,14 @@ Configure according your needs, I propose following Settings:
 | Datebase Top Talker Storage   | 365d  |   |
 
 
+# Disable Cerebro.
+
+Since Cerebro is mainly used for applying a custom Index Template, we don't need it in our daily routine and we can disable it. Edit your docker-compose.yml and remove the comment in the service block for Cerebro:
+
+```
+  cerebro:
+    image: lmenezes/cerebro
+    entrypoint: ["echo", "Service cerebro disabled"]
+```
+
 That should do it. Check your DPI Dashboard and enjoy :)
