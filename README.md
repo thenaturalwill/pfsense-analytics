@@ -1,6 +1,18 @@
 This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose. Thanks as well to MatthewJSalerno for some Streamlining of the Graylog provisioning Process.
 
-If it's easier for you, you can find a video guide here:  https://youtu.be/uOfPzueH6MA
+I have recently updated the whole stack to utilize Graylog 4 and Elasticsearch 7 and Grafana 7. I don't include any directions for Upgrading GL3/ES6 to GL4/ES7. 
+
+This doc has been tested with the following Versions:
+
+| Component           | Version                | 
+| -------------         |:---------------------: 
+| Elasticsearch     | 7.11.1 |
+| Grafana | 7.4.2 |
+| Graylog | 4.0.3 |
+| Cerebro | 0.9.3 | 
+
+
+If it's easier for you, you can find a video guide here:  https://youtu.be/uOfPzueH6MA (Still the Guide for GL3/ES6, will make a new one some day.)
 
 The whole metric approach is split into several subtopics.
 
@@ -29,7 +41,7 @@ This walkthrough has been made with a fresh install of Ubuntu 18.04 Bionic but s
 
 # 0. System requirements
 
-Since this involves Elasticsearch a few GB of RAM will be required. I'm not sure if an old Raspi will do. Give me feedback :)
+Since this involves Elasticsearch 7 a few GB of RAM will be required. Don't bother with less than 8GB. It just won't run.
 
 Please install docker, docker-compose and git as basic prerequisite.
 
@@ -70,7 +82,7 @@ A salt for encrypting your graylog passwords
 - GRAYLOG_PASSWORD_SECRET (Change that _now_)
 
 
-Edit Docker/graylog/getGeo.sh and insert _your_ tokenized Downloadlink of the Maxmind GeoIP Database. Create an account on https://www.maxmind.com/en/account/login and go to "My Account -> Download Files -> GeoLite2 City" and copy the Link "Download GZIP" to your getGeo.sh File. If you don't do that the geographic lookup of IP Addresses won't work.
+Edit Docker/graylog/getGeo.sh and insert _your_ tokenized Downloadlink of the Maxmind GeoIP Database. Create an account on https://www.maxmind.com/en/account/login and go to "My Account -> Download Files -> GeoLite2 City" and copy the Link "Download GZIP" to your getGeo.sh File. If you don't do that the geolookup feature for IP Addresses won't work.
 
 Finally, spin up the stack with:
 
@@ -86,13 +98,13 @@ cd ./Docker
 sudo docker-compose up -d --no-deps --build graylog
 ```
 
-
 This should expose you the following services externally:
 
 | Service       | URL                   | Default Login  | Purpose |
 | ------------- |:---------------------:| --------------:| --------------:|
 | Graylog       | http://localhost:9000 | admin/admin |  Configure Data Ingestions and Extractors for Log Inforation |
 | Grafana       | http://localhost:3000 | admin/admin | Draw nice Graphs |
+| Kibana        | http://localhost:5601/ | none | Default Elastic Data exploratiopn tool. Not required.|
 | Cerebro       | http://localhost:9001 |    none - provide with ES API: http://elasticsearch:9200 | ES Admin tool. Only required for setting up the Index.|
 
 Depending on your hardware a few minutes later you should be able to connect to
