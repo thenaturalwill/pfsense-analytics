@@ -1,3 +1,5 @@
+# pfSense Analytics
+
 This Project aims to give you better insight of what's going on your pfSense Firewall. It's based on some heavylifting alrerady done by devopstales and opc40772. Since it still was a bit clumsy and outdated I wrapped some docker-compose glue around it, to make it a little bit easier to get up and running. It should work hasslefree with a current Linux that has docker and docker-compose. Thanks as well to MatthewJSalerno for some Streamlining of the Graylog provisioning Process.
 
 I have recently updated the whole stack to utilize Graylog 4 and Elasticsearch 7 and Grafana 7. I don't include any directions for Upgrading GL3/ES6 to GL4/ES7. 
@@ -207,7 +209,7 @@ Once this procedure is done, we don't need Cerebro for daily work, so it could b
 
 We will now prepare Pfsense to send logs to graylog and for this in Status/System Logs/ Settings we will modify the options that will allow us to do so.
 
-We go to the Remote Logging Options section and in Remote log servers we specify the ip address and the port prefixed in the content pack in the pfsense input of graylog that in this case 5442.
+We go to the Remote Logging Options section and in Remote lo7g servers we specify the ip address and the port prefixed in the content pack in the pfsense input of graylog that in this case 5442.
 
 ![Pfsense](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Pfsene-log-settings-1024x329.png)
 
