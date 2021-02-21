@@ -82,7 +82,7 @@ A salt for encrypting your graylog passwords
 - GRAYLOG_PASSWORD_SECRET (Change that _now_)
 
 
-Edit Docker/graylog/getGeo.sh and insert _your_ tokenized Downloadlink of the Maxmind GeoIP Database. Create an account on https://www.maxmind.com/en/account/login and go to "My Account -> Download Files -> GeoLite2 City" and copy the Link "Download GZIP" to your getGeo.sh File. If you don't do that the geolookup feature for IP Addresses won't work.
+Edit `Docker/graylog/getGeo.sh` and insert _your_ license Key for the  Maxmind GeoIP Database. Create an account on https://www.maxmind.com/en/account/login and go to "My Account -> Manage License Keys -> Generate new License key" and copy the that Key to the placeholder in your getGeo.sh File. If you don't do that the geolookup feature for IP Addresses won't work.
 
 Finally, spin up the stack with:
 
@@ -119,7 +119,7 @@ Next we have to create the Index in Elasticsearch for the pfSense logs in System
 
 Index shard 4 and Index replicas 0, the rotation of the Index time index and the retention can be deleted, closure of an index according to the maximum number of indices or doing nothing. In my case, I set it to rotate monthly and eliminate the indexes after 12 months. In short there are many ways to establish the rotation. This index is created immediately.
 
-![Indices](https://www.sysadminsdecuba.com/wp-content/uploads/2018/04/Graylog_-_Indices_and_Index_Sets_-_2018-04-04_20.30.42-1024x82.png)
+![Indices](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/SS_Indexcreation_done.png)
 
 # 3. GeoIP Plugin activation
 
@@ -150,11 +150,11 @@ This content pack includes Input rsyslog type , extractors, lookup tables, Data 
 
 We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
 
-https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/pfsense_content_pack/graylog3/pfanalytics.json
+https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/pfsense_content_pack/graylog4/pfanalytics.json
 
 Once it's uploaded, press the Install button. If everthing went well it should look like:
 
-![dpi1](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/contentpack.png)
+![dpi1](https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/screenshots/SS_Contentpacks.png)
 
 Note the "pfintel" on the bottom of the list.
 
