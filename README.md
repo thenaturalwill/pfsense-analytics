@@ -12,6 +12,7 @@ This doc has been tested with the following Versions:
 | Grafana | 7.4.2 |
 | Graylog | 4.0.3 |
 | Cerebro | 0.9.3 | 
+| pfSense | 2.5.0 CE|
 
 
 If it's easier for you, you can find a video guide here:  https://youtu.be/uOfPzueH6MA (Still the Guide for GL3/ES6, will make a new one some day.)
@@ -175,7 +176,7 @@ As previously explained, by default graylog for each index that is created gener
 
 Get the Index Template from the GIT repo you cloned or sideload it from:
 
-https://raw.githubusercontent.com/lephisto/pfsense-graylog/master/Elasticsearch_pfsense_custom_template/pfsense_custom_template_es6.json
+https://raw.githubusercontent.com/lephisto/pfsense-analytics/master/Elasticsearch_pfsense_custom_template/pfsense_custom_template_es7.json
 
 To import personalized template open cerebro and will go to more/index template
 
@@ -268,5 +269,9 @@ Since Cerebro is mainly used for applying a custom Index Template, we don't need
     image: lmenezes/cerebro
     entrypoint: ["echo", "Service cerebro disabled"]
 ```
+
+No need to restart the whole Stack, just stop Cerebro:
+
+`sudo docker-compose stop cerebro`
 
 That should do it. Check your DPI Dashboard and enjoy :)
