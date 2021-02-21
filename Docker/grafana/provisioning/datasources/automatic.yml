@@ -35,5 +35,5 @@ datasources:
   database: "pfsense_*"
   url: http://elasticsearch:9200
   jsonData:
-    esVersion: 60
-    timeField: "utc_timestamp"
+    esVersion: 70
+    timeField: "timestamp"
