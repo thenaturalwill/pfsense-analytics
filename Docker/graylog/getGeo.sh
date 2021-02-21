@@ -1,2 +1,2 @@
-curl --output /etc/graylog/server/mm.tar.gz "https://download.maxmind.com/app/geoip_download_by_token?edition_id=GeoLite2-City&date=20210216&suffix=tar.gz&token=v2.local.fmoWF6Zlm-IwsSmz5Z5RM1NJTVkvOYyhvxM5724xotyEFFb7M2E5vXz_hcUKWdX7XKcIEGiSSC9oTeDV2UlZ0u5ZsEsYXYTHLYvdm5FZ9EOE0K6guo3eqLkcRw26lRqSgecPEG3J9wmOWbD69DzP4kCL4D-30v5CJugV-I0OALpQxrsOm4hfSETQXeXyt8YK26T76A"
+curl -o /etc/graylog/server/mm.tar.gz 'https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=BmvuNbtVQPvsHYNj&suffix=tar.gz'
 tar zxvf /etc/graylog/server/mm.tar.gz -C /etc/graylog/server/ --strip-components=1
