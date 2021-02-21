@@ -1,4 +1,4 @@
-FROM graylog/graylog:3.1
+FROM graylog/graylog:4.0
 # Probably a bad idea, but it works for now
 USER root
 RUN mkdir -pv /etc/graylog/server/
